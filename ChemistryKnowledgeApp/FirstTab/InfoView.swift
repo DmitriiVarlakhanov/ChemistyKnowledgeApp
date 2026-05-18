@@ -10,21 +10,37 @@ import SwiftUI
 struct InfoView: View {
     let data = PostData.createData()
 
+    var titleOn: Bool
+    var sliderBindedValue: Double
+
     var body: some View {
-        NavigationView {
-            List(data) { post in
-                NavigationLink {
-                    InfoDetails(post: post)
-                } label: {
-                    InfoRow(post: post)
+        if titleOn {
+            NavigationView {
+                List(data) { post in
+                    NavigationLink {
+                        InfoDetails(post: post)
+                    } label: {
+                        InfoRow(post: post, sliderBindedValue: sliderBindedValue)
+                    }
                 }
+                .navigationTitle("Немного о химии")
+                .listStyle(.plain)
             }
-            .navigationTitle("Немного о химии")
-            .listStyle(.plain)
+        } else {
+            NavigationView {
+                List(data) { post in
+                    NavigationLink {
+                        InfoDetails(post: post)
+                    } label: {
+                        InfoRow(post: post, sliderBindedValue: sliderBindedValue)
+                    }
+                }
+                .listStyle(.plain)
+            }
         }
     }
 }
 
 #Preview {
-    InfoView()
+    InfoView(titleOn: true, sliderBindedValue: 12)
 }
