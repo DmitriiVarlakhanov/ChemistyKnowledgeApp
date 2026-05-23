@@ -9,6 +9,7 @@ import SwiftUI
 
 struct InfoRow: View {
     var post: Post
+    var sliderBindedValue: Double
 
     var body: some View {
         HStack {
@@ -20,6 +21,7 @@ struct InfoRow: View {
                 .padding(.leading, 12)
 
             Text(post.title)
+                .font(.system(size: sliderBindedValue))
 
             Spacer()
         }
@@ -27,5 +29,5 @@ struct InfoRow: View {
 }
 
 #Preview {
-    InfoRow(post: Post(id: UUID(), title: "Testing", decription: "Testing", image: "Image1"))
+    InfoRow(post: Post(id: UUID(), title: "Testing", decription: "Testing", image: "Image1"), sliderBindedValue: 20)
 }

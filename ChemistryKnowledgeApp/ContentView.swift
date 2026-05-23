@@ -8,9 +8,12 @@
 import SwiftUI
 
 struct ContentView: View {
+    @AppStorage("titleOn") private var titleOn: Bool = true
+    @AppStorage("sliderBindedValue") private var sliderBindedValue: Double = 15
+
     var body: some View {
         TabView {
-            InfoView()
+            InfoView(titleOn: titleOn, sliderBindedValue: sliderBindedValue)
                 .tabItem {
                     Label(
                         "Инфо",
@@ -24,7 +27,7 @@ struct ContentView: View {
                         systemImage: "hand.wave"
                     )
                 }
-            SettingsView()
+            SettingsView(titleOn: $titleOn, sliderBindedValue: $sliderBindedValue)
                 .tabItem {
                     Label(
                         "Настройки",

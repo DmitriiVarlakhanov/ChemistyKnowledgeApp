@@ -15,35 +15,89 @@ struct SettingsView: View {
         case thirdOption
     }
 
+    var dragGesture: some Gesture {
+        DragGesture(minimumDistance: 0)
+            .onChanged { _ in
+                isEditing = true
+            }
+            .onEnded { _ in
+                isEditing = false
+            }
+    }
+
+    @Environment(\.colorScheme) var colorScheme
+
+    @Binding var titleOn: Bool
+    @Binding var sliderBindedValue: Double
+
     @State private var pickerSelection: Options = .secondOption
-
     @State private var toggle1State: Bool = true
-    @State private var toggle2State: Bool = false
-
-    @State private var sliderBindedValue = 50.0
+    @State private var isEditing: Bool = false
 
     var body: some View {
         Form {
-            Section("Секция 1") {
+
+            // MARK: - First section
+
+            Section("Тема приложения") {
+                if colorScheme == .light {
+                    Text("Light Theme enabled")
+                } else {
+                    Text("Dark Theme enabled")
+                }
+
                 Picker("Picker", selection: $pickerSelection) {
                     Text("Option1").tag(Options.firstOption)
                     Text("Option2").tag(Options.secondOption)
                     Text("Option3").tag(Options.thirdOption)
                 }
+
                 Toggle("Toggle 1", isOn: $toggle1State)
-                Toggle("Toggle 2", isOn: $toggle2State)
             }
 
-            Section("Секция 2") {
+            // MARK: - Second section
+
+            Section("Заголовок экрана Инфо") {
+                Toggle("Заголовок экрана Инфо", isOn: $titleOn)
+                if titleOn {
+                    Text("Navigation title enabled")
+                        .bold()
+                } else {
+                    Text("Navigation title disabled")
+                        .bold()
+                }
+            }
+
+            // MARK: - Third section
+
+            Section("Высота строки InfoRow") {
+                Text("Перемещайте для изменения высоты")
+                    .bold()
+
                 Slider(
                     value: $sliderBindedValue,
-                    in: 0...100
-                )
+                    in: 10...25,
+                    step: 1
+                ) {
+                    Text("!!!")
+                } minimumValueLabel: {
+                    Text("10")
+                } maximumValueLabel: {
+                    Text("25")
+                }
+                .simultaneousGesture(dragGesture)
+
+                if isEditing {
+                    InfoRow(
+                        post: PostData.createData()[0],
+                        sliderBindedValue: sliderBindedValue
+                    )
+                }
             }
         }
     }
 }
 
 #Preview {
-    SettingsView()
+    SettingsView(titleOn: .constant(true), sliderBindedValue: .constant(15))
 }
