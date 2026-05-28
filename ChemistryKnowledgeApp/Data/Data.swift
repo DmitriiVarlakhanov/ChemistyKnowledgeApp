@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct PostData {
 
@@ -29,7 +30,7 @@ struct PostData {
         var postArray: [Post] = []
 
         for i in 1...5 {
-            let post = Post(id: UUID(), title: titles[i-1], decription: descriptions[i-1], image: "Image\(i)")
+            let post = Post(id: UUID(), title: titles[i-1], decription: descriptions[i-1], image: Image("Image\(i)"))
             postArray.append(post)
         }
 

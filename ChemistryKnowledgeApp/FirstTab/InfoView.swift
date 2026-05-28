@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct InfoView: View {
-    let data = PostData.createData()
+    @Binding var data: [Post]
 
     var titleOn: Bool
     var sliderBindedValue: Double
@@ -16,11 +16,11 @@ struct InfoView: View {
     var body: some View {
         if titleOn {
             NavigationView {
-                List(data) { post in
+                List($data, editActions: .delete) { $post in
                     NavigationLink {
-                        InfoDetails(post: post)
+                        InfoDetails(post: $post)
                     } label: {
-                        InfoRow(post: post, sliderBindedValue: sliderBindedValue)
+                        InfoRow(post: $post, sliderBindedValue: sliderBindedValue)
                     }
                 }
                 .navigationTitle("Немного о химии")
@@ -28,11 +28,11 @@ struct InfoView: View {
             }
         } else {
             NavigationView {
-                List(data) { post in
+                List($data, editActions: .delete) { $post in
                     NavigationLink {
-                        InfoDetails(post: post)
+                        InfoDetails(post: $post)
                     } label: {
-                        InfoRow(post: post, sliderBindedValue: sliderBindedValue)
+                        InfoRow(post: $post, sliderBindedValue: sliderBindedValue)
                     }
                 }
                 .listStyle(.plain)
@@ -42,5 +42,5 @@ struct InfoView: View {
 }
 
 #Preview {
-    InfoView(titleOn: true, sliderBindedValue: 12)
+    InfoView(data: .constant(PostData.createData()), titleOn: true, sliderBindedValue: 12)
 }
