@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct InfoRow: View {
-    var post: Post
+    @Binding var post: Post
     var sliderBindedValue: Double
 
     var body: some View {
         HStack {
-            Image(post.image)
+            post.image
                 .resizable()
                 .scaledToFill()
                 .clipShape(Circle())
@@ -29,5 +29,5 @@ struct InfoRow: View {
 }
 
 #Preview {
-    InfoRow(post: Post(id: UUID(), title: "Testing", decription: "Testing", image: "Image1"), sliderBindedValue: 20)
+    InfoRow(post: .constant(Post(id: UUID(), title: "Testing", decription: "Testing", image: Image("Image1"))), sliderBindedValue: 20)
 }

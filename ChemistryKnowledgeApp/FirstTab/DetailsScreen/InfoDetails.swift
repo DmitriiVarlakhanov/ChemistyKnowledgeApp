@@ -8,32 +8,32 @@
 import SwiftUI
 
 struct InfoDetails: View {
-    var post: Post
-    
+    @Binding var post: Post
+
     var body: some View {
         VStack {
-            Image(post.image)
+            post.image
                 .resizable()
                 .scaledToFill()
                 .frame(width: 380, height: 200)
                 .clipShape(RoundedRectangle(cornerSize: CGSize(width: 12, height: 12)))
                 .padding(10)
-            
+
             ScrollView(.vertical) {
                 Text(post.title)
                     .font(.title)
                     .fontWeight(.bold)
                     .multilineTextAlignment(.center)
                     .padding(5)
-                
+
                 Divider()
-                
+
                 Text(post.decription)
                     .font(.default)
                     .fontWeight(.regular)
                     .multilineTextAlignment(.leading)
                     .padding(10)
-                
+
                 Spacer()
             }
         }
@@ -41,11 +41,12 @@ struct InfoDetails: View {
 }
 
 #Preview {
-    InfoDetails(post: Post(
+    InfoDetails(post: .constant(Post(
         id: UUID(),
         title: "Testing",
         decription: "Testing Testing Testing Testing Testing Testing Testing Testing",
-        image: "Image1"
+        image: Image("Image1")
+    )
     )
     )
 }

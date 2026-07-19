@@ -29,6 +29,7 @@ struct SettingsView: View {
 
     @Binding var titleOn: Bool
     @Binding var sliderBindedValue: Double
+    @Binding var data: [Post]
 
     @State private var pickerSelection: Options = .secondOption
     @State private var toggle1State: Bool = true
@@ -89,7 +90,7 @@ struct SettingsView: View {
 
                 if isEditing {
                     InfoRow(
-                        post: PostData.createData()[0],
+                        post: $data[0],
                         sliderBindedValue: sliderBindedValue
                     )
                 }
@@ -99,5 +100,5 @@ struct SettingsView: View {
 }
 
 #Preview {
-    SettingsView(titleOn: .constant(true), sliderBindedValue: .constant(15))
+    SettingsView(titleOn: .constant(true), sliderBindedValue: .constant(15), data: .constant(PostData.createData()))
 }

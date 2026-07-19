@@ -6,11 +6,12 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct Post: Identifiable {
 
     let id: UUID
     let title: String
     let decription: String
-    let image: String
+    let image: Image
 }

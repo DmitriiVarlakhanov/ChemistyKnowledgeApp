@@ -11,23 +11,30 @@ struct ContentView: View {
     @AppStorage("titleOn") private var titleOn: Bool = true
     @AppStorage("sliderBindedValue") private var sliderBindedValue: Double = 15
 
+    @State private var data = PostData.createData()
+
+    @State private var id: UUID?
+    @State private var title: String?
+    @State private var decription: String?
+    @State private var image: String?
+
     var body: some View {
         TabView {
-            InfoView(titleOn: titleOn, sliderBindedValue: sliderBindedValue)
+            InfoView(data: $data, titleOn: titleOn, sliderBindedValue: sliderBindedValue)
                 .tabItem {
                     Label(
                         "Инфо",
                         systemImage: "info.bubble"
                     )
                 }
-            HelloView()
+            AddNewPost(data: $data)
                 .tabItem {
                     Label(
-                        "Hello",
-                        systemImage: "hand.wave"
+                        "Создать пост",
+                        systemImage: "pencil.line"
                     )
                 }
-            SettingsView(titleOn: $titleOn, sliderBindedValue: $sliderBindedValue)
+            SettingsView(titleOn: $titleOn, sliderBindedValue: $sliderBindedValue, data: $data)
                 .tabItem {
                     Label(
                         "Настройки",
